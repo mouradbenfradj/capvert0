@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns="http://thelia.net/schema/dic/config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+
+
+    <services>
+        <!--  Parser context -->
+
+
+
+        <!-- Parser configuration -->
+
+        <service id="thelia.parser" class="TheliaSmarty\Template\SmartyParser">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="thelia.parser.context"/>
+            <argument type="service" id="thelia.template_helper"/>
+            <argument >%kernel.environment%</argument>
+            <argument >%kernel.debug%</argument>
+        </service>
+
+        <service id="thelia.parser.helper" class="TheliaSmarty\Template\SmartyHelper" />
+
+        <!--  URL maganement -->
+
+
+
+        <!--  The assets resolver -->
+        <service id="thelia.parser.asset.resolver" class="TheliaSmarty\Template\Assets\SmartyAssetsResolver" >
+            <argument type="service" id="assetic.asset.manager" />
+        </service>
+
+        <!-- Smarty parser plugins -->
+
+        <service id="smarty.plugin.assets" class="TheliaSmarty\Template\Plugins\Assets" >
+            <tag name="thelia.parser.register_plugin"/>
+
+            <argument type="service" id="assetic.asset.manager" />
+            <argument type="service" id="thelia.parser.asset.resolver" />
+        </service>
+
+        <service id="smarty.plugin.format" class="TheliaSmarty\Template\Plugins\Format">
+            <argument type="service" id="request_stack"/>
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+
+        <service id="smarty.plugin.thelialoop" class="TheliaSmarty\Template\Plugins\TheliaLoop">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="service_container" />
+            <call method="setLoopList">
+                <argument>%thelia.parser.loops%</argument>
+            </call>
+        </service>
+
+        <service id="smarty.plugin.cartpostage" class="TheliaSmarty\Template\Plugins\CartPostage">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="smarty.plugin.type" class="TheliaSmarty\Template\Plugins\Type">
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+
+        <service id="smarty.plugin.render" class="TheliaSmarty\Template\Plugins\Render">
+            <argument type="service" id="controller_resolver" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="service_container" />
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+
+        <service id="smart.plugin.form" class="TheliaSmarty\Template\Plugins\Form">
+            <tag name="thelia.parser.register_plugin"/>
+
+            <argument type="service" id="thelia.form_factory" />
+            <argument type="service" id="thelia.parser.context"/>
+            <argument type="service" id="thelia.parser"/>
+
+            <call method="setFormDefinition">
+                <argument>%thelia.parser.forms%</argument>
+            </call>
+        </service>
+
+        <service id="smarty.plugin.translation" class="TheliaSmarty\Template\Plugins\Translation" >
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="thelia.translator" />
+        </service>
+
+        <service id="smarty.plugin.module" class="TheliaSmarty\Template\Plugins\Module">
+            <argument>%kernel.debug%</argument>
+            <argument type="service" id="request_stack"/>
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+
+        <service id="smarty.url.module" class="TheliaSmarty\Template\Plugins\UrlGenerator">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="thelia.token_provider"/>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="smarty.plugin.security" class="TheliaSmarty\Template\Plugins\Security">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="thelia.securityContext" />
+        </service>
+
+        <service id="smarty.plugin.dataAccess" class="TheliaSmarty\Template\Plugins\DataAccessFunctions">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="thelia.securityContext" />
+            <argument type="service" id="thelia.taxEngine" />
+            <argument type="service" id="thelia.parser.context"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="thelia.coupon.manager"/>
+        </service>
+
+        <service id="smarty.plugin.adminUtilities" class="TheliaSmarty\Template\Plugins\AdminUtilities">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="thelia.securityContext" />
+            <argument type="service" id="thelia.template_helper" />
+        </service>
+
+        <service id="smarty.plugin.flashMessage" class="TheliaSmarty\Template\Plugins\FlashMessage">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="thelia.translator" />
+        </service>
+
+        <service id="smarty.plugin.esi" class="TheliaSmarty\Template\Plugins\Esi">
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="fragment.renderer.esi" />
+            <argument type="service" id="request_stack" />
+        </service>
+
+        <service id="smarty.plugin.hook" class="TheliaSmarty\Template\Plugins\Hook">
+            <argument>%kernel.debug%</argument>
+            <tag name="thelia.parser.register_plugin"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="smarty.plugin.cache" class="TheliaSmarty\Template\Plugins\Cache">
+            <argument type="service" id="thelia.cache"/>
+            <argument type="service" id="request_stack"/>
+            <argument>%kernel.debug%</argument>
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+    </services>
+
+</config>

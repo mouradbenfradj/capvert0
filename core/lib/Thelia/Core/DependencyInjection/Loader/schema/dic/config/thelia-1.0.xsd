@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://thelia.net/schema/dic/config"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://thelia.net/schema/dic/config"
+            elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="loops" type="loops" />
+            <xsd:element name="filters" type="filters" />
+            <xsd:element name="templateDirectives" type="templateDirectives" />
+            <xsd:element name="services" type="services" />
+            <xsd:element name="parameters" type="parameters"/>
+            <xsd:element name="commands" type="commands"/>
+            <xsd:element name="forms" type="forms" />
+            <xsd:element name="routing" type="routing" />
+            <xsd:element name="hooks" type="hooks" />
+            <xsd:element name="export_categories" type="export_categories" />
+            <xsd:element name="exports" type="exports" />
+            <xsd:element name="import_categories" type="import_categories" />
+            <xsd:element name="imports" type="imports" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="parameters">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="parameter" type="parameter" />
+        </xsd:choice>
+        <xsd:attribute name="type" type="parameter_type" />
+        <xsd:attribute name="key" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="parameter" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="parameter" type="parameter" />
+        </xsd:choice>
+        <xsd:attribute name="type" type="parameter_type" />
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="key" type="xsd:string" />
+        <xsd:attribute name="on-invalid" type="invalid_sequence" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="parameter_type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="collection" />
+            <xsd:enumeration value="service" />
+            <xsd:enumeration value="string" />
+            <xsd:enumeration value="constant" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="invalid_sequence">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="null" />
+            <xsd:enumeration value="ignore" />
+            <xsd:enumeration value="exception" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="routing">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="file" type="file"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="file">
+        <xsd:attribute name="path" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="loops">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+            <xsd:element name="loop" type="loop"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="loop">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="commands">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+            <xsd:element name="command" type="command"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="command">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="forms">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded" >
+            <xsd:element name="form" type="form" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="form">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="filters">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="filter" type="filter" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="filter">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="templateDirectives">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="templateDirective" type="templateDirective" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="templateDirective">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="services">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+        Enclosing element for the definition of all services
+      ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="service" type="service" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="hooks">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+        Enclosing element for the definition of all hooks
+      ]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="hook" type="hook" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="service">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="file" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="configurator" type="configurator" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="call" type="call" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="tag" type="tag" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:choice>
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="scope" type="xsd:string" />
+        <xsd:attribute name="public" type="boolean" />
+        <xsd:attribute name="synthetic" type="boolean" />
+        <xsd:attribute name="abstract" type="boolean" />
+        <xsd:attribute name="factory-class" type="xsd:string" />
+        <xsd:attribute name="factory-method" type="xsd:string" />
+        <xsd:attribute name="factory-service" type="xsd:string" />
+        <xsd:attribute name="alias" type="xsd:string" />
+        <xsd:attribute name="parent" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="hook">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="file" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="configurator" type="configurator" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="call" type="call" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="tag" type="hook_tag" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:choice>
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="scope" type="xsd:string" />
+        <xsd:attribute name="public" type="boolean" />
+        <xsd:attribute name="synthetic" type="boolean" />
+        <xsd:attribute name="abstract" type="boolean" />
+        <xsd:attribute name="factory-class" type="xsd:string" />
+        <xsd:attribute name="factory-method" type="xsd:string" />
+        <xsd:attribute name="factory-service" type="xsd:string" />
+        <xsd:attribute name="alias" type="xsd:string" />
+        <xsd:attribute name="parent" type="xsd:string" />
+        <xsd:attribute name="event" type="xsd:string" />
+        <xsd:attribute name="type" type="hook_type" />
+        <xsd:attribute name="active" type="hook_active" />
+    </xsd:complexType>
+
+    <xsd:complexType name="hook_tag">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="event" type="xsd:string" />
+        <xsd:attribute name="method" type="xsd:string" />
+        <xsd:attribute name="type" type="hook_type" />
+        <xsd:attribute name="active" type="hook_active" />
+        <xsd:attribute name="templates" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="hook_type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="fo" />
+            <xsd:enumeration value="front" />
+            <xsd:enumeration value="frontoffice" />
+            <xsd:enumeration value="bo" />
+            <xsd:enumeration value="back" />
+            <xsd:enumeration value="backoffice" />
+            <xsd:enumeration value="pdf" />
+            <xsd:enumeration value="email" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="hook_active">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="0" />
+            <xsd:enumeration value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="tag">
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:anyAttribute namespace="##any" processContents="lax" />
+    </xsd:complexType>
+
+    <xsd:complexType name="property" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="1">
+            <xsd:element name="service" type="service" />
+        </xsd:choice>
+        <xsd:attribute name="type" type="argument_type" />
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="on-invalid" type="xsd:string" />
+        <xsd:attribute name="strict" type="boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="argument" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="service" type="service" />
+        </xsd:choice>
+        <xsd:attribute name="type" type="argument_type" />
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="key" type="xsd:string" />
+        <xsd:attribute name="index" type="xsd:integer" />
+        <xsd:attribute name="on-invalid" type="xsd:string" />
+        <xsd:attribute name="strict" type="boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="call" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="service" type="service" />
+        </xsd:choice>
+        <xsd:attribute name="method" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="argument_type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="collection" />
+            <xsd:enumeration value="service" />
+            <xsd:enumeration value="string" />
+            <xsd:enumeration value="constant" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="boolean">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(%.+%|true|false)" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="configurator">
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="service" type="xsd:string" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="method" type="xsd:string" />
+        <xsd:attribute name="function" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="export_categories">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="export_category" type="export_category"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="export_category">
+        <xsd:choice maxOccurs="unbounded" minOccurs="1">
+            <xsd:element name="title" type="export_category_title" />
+        </xsd:choice>
+
+        <xsd:attribute name="id" use="required" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="export_category_title">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="locale" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="exports">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="export" type="export"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="export">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="export_descriptive" type="export_descriptive" />
+        </xsd:choice>
+
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+        <xsd:attribute name="category_id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="export_descriptive">
+        <xsd:sequence minOccurs="1" maxOccurs="1">
+            <xsd:element name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string" />
+        </xsd:sequence>
+
+        <xsd:attribute name="locale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="import_categories">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="import_category" type="import_category"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="import_category">
+        <xsd:choice maxOccurs="unbounded" minOccurs="1">
+            <xsd:element name="title" type="import_category_title" />
+        </xsd:choice>
+
+        <xsd:attribute name="id" use="required" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="import_category_title">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="locale" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="imports">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="import" type="import"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="import">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="import_descriptive" type="import_descriptive" />
+        </xsd:choice>
+
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+        <xsd:attribute name="category_id" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="import_descriptive">
+        <xsd:sequence minOccurs="1" maxOccurs="1">
+            <xsd:element name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string" />
+        </xsd:sequence>
+
+        <xsd:attribute name="locale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+</xsd:schema>

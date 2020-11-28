@@ -1,0 +1,21 @@
+<div itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="{$store_name}">
+            <address class="adr" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                <p><span class="street-address" itemprop="streetAddress"></span>{config key="store_address1"} {config key="store_address2"} {config key="store_address3"}
+                <span class="postal-code" itemprop="postalCode"></span>{config key="store_zipcode"}
+                <span class="locality" itemprop="addressLocality"></span>
+                    {config key="store_city"}
+                    {if {config key="store_country"} }
+                        {loop type="country" name="address.country.title" id={config key="store_country"}}, {$TITLE}{/loop}
+                    {/if}
+                </p>
+            </address>
+        {if {config key="store_phone"} }
+        <p>
+            {config key="store_phone"}
+        </p>
+        {/if}
+        <p>
+            <a href="{url path='/contact'}" style="color: white">{intl l="Find us, Contact us" d="hookcontact.fo.default"}</a>
+        </p>
+</div>

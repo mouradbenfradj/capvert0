@@ -1,0 +1,43 @@
+<!-- ##### Contact Area Info Start ##### -->
+<div class="contact-area-info section-padding-0-100">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <!-- Contact Thumbnail -->
+            <div class="col-12 col-md-6">
+                <div class="contact--thumbnail">
+                    <img src="{image file='assets/src/img/bg-img/25.jpg'}" alt="">
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5">
+                <!-- Section Heading -->
+                <div class="section-heading">
+                    <h2>{intl l="Contact Us"}</h2>
+                    <p></p>
+                </div>
+                <!-- Contact Information -->
+                <div class="contact-information">
+                    <p><span>Address:</span>  <span class="street-address" itemprop="streetAddress"></span>{config key="store_address1"} {config key="store_address2"} {config key="store_address3"}
+                    <span class="postal-code" itemprop="postalCode"></span>{config key="store_zipcode"}
+                    <span class="locality" itemprop="addressLocality"></span>
+                        {config key="store_city"}
+                        {if {config key="store_country"} }
+                        {loop type="country" name="address.country.title" id={config key="store_country"}}, {$TITLE}{/loop}
+                        {/if}
+                    </p>
+                    {if {config key="store_phone"} }
+                    <p><span>Phone:</span>
+                        {config key="store_phone"}
+                    </p>
+                    {/if}
+<!--
+                    <p><span>Email:</span> info.deercreative@gmail.com</p>
+                    <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
+                    <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
+-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Contact Area Info End ##### -->

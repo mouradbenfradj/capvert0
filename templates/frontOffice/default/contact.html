@@ -1,0 +1,137 @@
+{extends file="layout.tpl"}
+
+{* Breadcrumb *}
+{block name='no-return-functions' append}
+    {$breadcrumbs = [['title' => {intl l="Contact Us"}, 'url'=>{url path="/contact"}]]}
+{/block}
+
+{block name="main-content"}
+
+
+<!-- ##### Breadcrumb Area Start ##### -->
+<div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url({image file='assets/src/img/bg-img/24.jpg'});">
+        <h2>{intl l="Contact Us"}</h2>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcrumb Area End ##### -->
+{ifhook rel="contact.top"}
+{hook name="contact.top"}
+{/ifhook}
+{elsehook rel="contact.top"}
+
+{/elsehook}
+
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-12 col-lg-5">
+                <!-- Section Heading -->
+                <div class="section-heading">
+                    <h2></h2>
+                    <p></p>
+                </div>
+                <!-- Contact Form Area -->
+                <div class="contact-form-area mb-100">
+                    {block name="contact-form"}
+                    {form name="thelia.front.contact"}
+                    <form id="form-contact" action="{url path="/contact"}" method="post">
+                    {form_hidden_fields}
+
+                    {hook name="contact.form-top"}
+                    <div class="row">
+                        {form_field field="name"}
+                        <div class="col-12">
+                            <div class="form-group{if $error} has-error{/if}">
+                                <input type="text" name="{$name}" id="{$label_attr.for}" class="form-control" maxlength="255" placeholder="{intl l="Placeholder contact name"}" value="{$value}"{if $required} aria-required="true" required{/if}{if !isset($error_focus) && $error} autofocus{/if}>
+                                {if $error }
+                                <span class="help-block">{$message}</span>
+                                {assign var="error_focus" value="true"}
+                                {elseif $value != "" && !$error}
+                                <span class="help-block"><i class="fa fa-check"></i></span>
+                                {/if}
+                            </div>
+                        </div><!--/.form-group-->
+                        {/form_field}
+                        {form_field field="email"}
+                        <div class="col-12">
+                            <div class="form-group{if $error} has-error{/if}">
+                                <input type="email" name="{$name}" id="{$label_attr.for}" class="form-control" maxlength="255" placeholder="{intl l="Placeholder contact email"}" value="{$value}"{if $required} aria-required="true" required{/if}{if !isset($error_focus) && $error} autofocus{/if}>
+                                {if $error }
+                                <span class="help-block">{$message}</span>
+                                {assign var="error_focus" value="true"}
+                                {/if}
+                            </div>
+                        </div>
+                        {/form_field}
+                        {form_field field="subject"}
+                        <div class="col-12">
+                            <div class="form-group{if $error} has-error{/if}">
+                                <input type="text" name="{$name}" id="{$label_attr.for}" class="form-control" maxlength="255" placeholder="{intl l="Placeholder contact subject"}" value="{$value}" {if $required} aria-required="true" required{/if}{if !isset($error_focus) && $error} autofocus{/if}>
+                                {if $error }
+                                <span class="help-block">{$message}</span>
+                                {assign var="error_focus" value="true"}
+                                {/if}
+                            </div>
+                        </div>
+                        {/form_field}
+                        {form_field field="message"}
+                        <div class="col-12">
+                            <div class="form-group{if $error} has-error{/if}">
+                                <textarea name="{$name}" id="{$label_attr.for}" placeholder="{intl l="Placeholder contact message"}" rows="10" class="form-control"{if $required} aria-required="true" required{/if}>{$value}</textarea>
+                                {if $error }
+                                <span class="help-block">{$message}</span>
+                                {assign var="error_focus" value="true"}
+                                {/if}
+                            </div>
+                        </div>
+                        {/form_field}
+                        {hook name="contact.form-bottom"}
+                        <div class="col-12">
+                            <button type="submit" class="btn alazea-btn mt-15">{intl l="Send"}</button>
+                        </div>
+                    </div>
+                    </form>
+                    {/form}
+                    {/block}
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <!-- Google Maps -->
+                <div class="map-area mb-100">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2610.7450348547823!2d10.798169314630368!3d36.479699293375916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDI4JzQ2LjkiTiAxMMKwNDgnMDEuMyJF!5e1!3m2!1sfr!2stn!4v1590098876171!5m2!1sfr!2stn" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    {hook name="contact.bottom"}
+</section>
+<!-- ##### Contact Area End ##### -->
+{/block}
+
+{block name="stylesheet"}
+{hook name="contact.stylesheet"}
+{/block}
+
+{block name="after-javascript-include"}
+{hook name="contact.after-javascript-include"}
+{/block}
+
+{block name="javascript-initialization"}
+{hook name="contact.javascript-initialization"}
+{/block}

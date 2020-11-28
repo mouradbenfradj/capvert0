@@ -1,0 +1,11 @@
+<!-- Language Dropdown -->
+<div class="language-dropdown">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{lang attr="title"}</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {loop type="lang" name="lang_available" exclude="{lang attr="id"}"}
+            <a class="dropdown-item" href="{url path="{navigate to="current"}" lang={$LOCALE}}">{$TITLE}</a>
+            {/loop}
+        </div>
+    </div>
+</div>

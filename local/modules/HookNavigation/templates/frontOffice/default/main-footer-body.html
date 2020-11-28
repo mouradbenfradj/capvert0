@@ -1,0 +1,24 @@
+{ifloop rel="blog.articles"}
+
+    {loop type="content" name="blog.articles" folder=$bodyFolderId limit=3}
+<div class="single-best-seller-product d-flex align-items-center">
+  <!--  <div class="product-thumbnail">
+        <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
+    </div>-->
+    <div class="product-info">
+        <a href="{$URL}">{$TITLE}</a>
+        <p>{$CHAPO}</p>
+    </div>
+</div>
+{/loop}
+{/ifloop}
+{elseloop rel="blog.articles"}
+<div class="single-best-seller-product d-flex align-items-center">
+    <!--  <div class="product-thumbnail">
+          <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
+      </div>-->
+    <div class="product-info">
+        <p>{intl l="No articles currently" d="hooknavigation.fo.default"}</p>
+    </div>
+</div>
+{/elseloop}

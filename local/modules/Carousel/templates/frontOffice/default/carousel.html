@@ -1,0 +1,38 @@
+{ifloop rel="carousel.front"}
+<!-- ##### Hero Area Start ##### -->
+<<section class="hero-area">
+    <div class="hero-post-slides owl-carousel">
+        <!-- Single Hero Post -->
+
+        <!-- Single Hero Post -->
+        {loop type="carousel" name="carousel.front" width="1200" resize_mode="borders"}
+        <div id="carousel" class="single-hero-post bg-overlay">
+            <!-- Post Image -->
+            <div class="slide-img bg-img" style="background-image: url({$IMAGE_URL});"></div>
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        &lt;!&ndash; Post Content &ndash;&gt;
+                        <div class="hero-slides-content text-center">
+                            {if $TITLE}<h2>{$TITLE}</h2>{/if}
+                            {if $DESCRIPTION}<p>{$DESCRIPTION nofilter}</p>{/if}
+                            <div class="welcome-btn-group">
+                                &lt;!&ndash;
+                                {if $URL}
+                                <a href="{$URL|default:'#'}" class="btn alazea-btn mr-30">{$URL|default:'#'}</a>&ndash;&gt;
+                                </a>{/if}
+                                <a href="{url path='/contact'}"
+                                   class="btn alazea-btn active">{intl l="Find us, Contact us"
+                                    d="hookcontact.fo.default"}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/loop}
+    </div>
+</section>
+
+<!-- ##### Hero Area End ##### -->
+{/ifloop}
